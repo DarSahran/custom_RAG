@@ -10,6 +10,8 @@ HF_API_TOKEN = os.environ.get("HF_API_TOKEN")
 
 @app.post("/chat")
 async def chat(request: Request):
+    # Debug: check if the HF_API_TOKEN is present
+    print("HF_API_TOKEN present:", bool(HF_API_TOKEN))
     try:
         data = await request.json()
         question = data.get("question")
