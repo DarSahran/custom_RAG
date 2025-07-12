@@ -3,8 +3,8 @@ from transformers import pipeline
 
 app = FastAPI()
 
-# Use a small model for free CPU hosting (e.g., TinyLlama, DistilGPT2, Phi-2)
-chatbot = pipeline("text-generation", model="TinyLlama/TinyLlama-1.1B-Chat-v1")
+# Use a small model for free CPU hosting (e.g., DistilGPT2)
+chatbot = pipeline("text-generation", model="distilgpt2")
 
 @app.post("/chat")
 async def chat(request: Request):
