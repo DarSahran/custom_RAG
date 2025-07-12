@@ -5,7 +5,7 @@ import os
 app = FastAPI()
 
 
-HF_API_URL = "https://api-inference.huggingface.co/models/distilgpt2"
+HF_API_URL = "https://api-inference.huggingface.co/models/gpt2"
 HF_API_TOKEN = os.environ.get("HF_API_TOKEN")
 
 @app.post("/chat")
