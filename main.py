@@ -6,7 +6,7 @@ app = FastAPI()
 
 
 HF_API_URL = "https://api-inference.huggingface.co/models/distilgpt2"
-HF_API_TOKEN = os.environ.get("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")
+HF_API_TOKEN = os.environ.get("HF_API_TOKEN")
 
 @app.post("/chat")
 async def chat(request: Request):
