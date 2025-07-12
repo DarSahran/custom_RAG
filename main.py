@@ -1,10 +1,12 @@
 from fastapi import FastAPI, Request
 import requests
+import os
 
 app = FastAPI()
 
 
 HF_API_URL = "https://api-inference.huggingface.co/models/distilgpt2"
+HF_API_TOKEN = os.environ.get("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")
 
 @app.post("/chat")
 async def chat(request: Request):
@@ -19,7 +21,8 @@ async def chat(request: Request):
             "inputs": prompt,
             "parameters": {"max_new_tokens": 128},
         }
-        response = requests.post(HF_API_URL, json=payload)
+        headers = {"Authorization": f"Bearer {HF_API_TOKEN}"} if HF_API_TOKEN else {}
+        response = requests.post(HF_API_URL, json=payload, headers=headers)
         if response.status_code == 200:
             data = response.json()
             if isinstance(data, list) and len(data) > 0 and "generated_text" in data[0]:
