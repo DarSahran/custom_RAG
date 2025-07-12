@@ -3,14 +3,18 @@ from transformers import pipeline
 
 app = FastAPI()
 
-# Use a small model for free CPU hosting (e.g., DistilGPT2)
 chatbot = pipeline("text-generation", model="distilgpt2")
 
 @app.post("/chat")
 async def chat(request: Request):
-    data = await request.json()
-    question = data.get("question")
-    history = data.get("history", [])
-    prompt = "\n".join(history) + "\nUser: " + question
-    result = chatbot(prompt, max_new_tokens=256)
-    return {"answer": result[0]["generated_text"]}
+    try:
+        data = await request.json()
+        question = data.get("question")
+        history = data.get("history", [])
+        if not question:
+            return {"error": "No question provided"}
+        prompt = "\n".join(history) + "\nUser: " + question
+        result = chatbot(prompt, max_new_tokens=256)
+        return {"answer": result[0]["generated_text"]}
+    except Exception as e:
+        return {"error": str(e)}
